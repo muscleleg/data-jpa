@@ -20,16 +20,22 @@ public class Member {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
-    public Member(String userName) {
-        this.userName = userName;
+    public Member(String name) {
+        this.userName = name;
     }
 
-    public Member(String userName, int age, Team team) {
-        this.userName = userName;
+    public Member(String name, int age, Team team) {
+        this.userName = name;
         this.age = age;
         if (team != null) {
             changeTeam(team);
         }
+    }
+
+    public Member(String name, int age) {
+        this.userName = name;
+        this.age = age;
+
     }
 
     public void changeTeam(Team team) {

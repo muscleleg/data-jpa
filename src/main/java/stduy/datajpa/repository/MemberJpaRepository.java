@@ -1,12 +1,10 @@
 package stduy.datajpa.repository;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import stduy.datajpa.entity.Member;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +34,13 @@ public class MemberJpaRepository {
 
     public Member find(Long id) {
         return em.find(Member.class, id);
+    }
+
+    public List<Member> findByUsernameAndAgeGreaterThan(String userName, int age) {
+        return em.createQuery("select m from Member m where m.userName = : username and m.age > : age")
+                .setParameter("username", userName)
+                .setParameter("age", age)
+                .getResultList();
     }
 
 }
