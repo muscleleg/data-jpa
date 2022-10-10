@@ -8,24 +8,30 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id", "userName", "age"})
+@ToString(of = {"id", "username", "age"})
+@NamedQuery(
+        name="Member.findByUsername",
+        query="select m from Member m where m.username = :username"
+)
+
 public class Member {
     @Id
     @GeneratedValue
     @Column(name = "member_id")
     private Long id;
-    private String userName;
+    private String username;
     private int age;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
+
     public Member(String name) {
-        this.userName = name;
+        this.username = name;
     }
 
     public Member(String name, int age, Team team) {
-        this.userName = name;
+        this.username = name;
         this.age = age;
         if (team != null) {
             changeTeam(team);
@@ -33,7 +39,7 @@ public class Member {
     }
 
     public Member(String name, int age) {
-        this.userName = name;
+        this.username = name;
         this.age = age;
 
     }
@@ -42,9 +48,6 @@ public class Member {
         this.team = team;
         team.getMembers().add(this);
     }
-
-
-
 
 
 }
